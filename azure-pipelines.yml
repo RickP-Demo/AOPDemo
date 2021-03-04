@@ -15,15 +15,7 @@ stages:
 - stage: Build
   jobs:
   - job: Build
-    steps:
-    - task: AzureKeyVault@1
-      inputs:
-        azureSubscription: 'AOPDemo'
-        KeyVaultName: 'aopdemo-dev'
-        SecretsFilter: '*'
-        RunAsPreJob: true
-    - powershell: |
-        Write-Host "Hoping this works: $(secretSetting)"        
+    steps:  
     - task: NuGetToolInstaller@1
     - task: NuGetCommand@2
       inputs:
@@ -52,7 +44,9 @@ stages:
 - stage: DEV
   dependsOn: Build
   variables: 
-    Environment: DEV
+    - group: aopdemo
+    - name: Environment
+      value: DEV
   jobs:
   - template: deploy-appservice-template.yml
     parameters:
