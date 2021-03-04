@@ -16,6 +16,10 @@ stages:
   jobs:
   - job: Build
     steps:
+    - task: AzureKeyVault@1
+      inputs:
+        azureSubscription: 'AOPDemo'
+        KeyVaultName: 'aopdemo-dev'
     - task: NuGetToolInstaller@1
     - task: NuGetCommand@2
       inputs:
@@ -44,7 +48,7 @@ stages:
 - stage: DEV
   dependsOn: Build
   variables: 
-    Environment: DEV
+    Environment: $(Environment-DEV)
   jobs:
   - template: deploy-appservice-template.yml
     parameters:
