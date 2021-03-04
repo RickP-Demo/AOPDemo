@@ -1,7 +1,7 @@
 # azure-pipelines.yml
 
 trigger:
-- master
+- main
 pool:
   name: default
 variables:
