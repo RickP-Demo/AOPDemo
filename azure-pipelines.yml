@@ -9,16 +9,7 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
-
-
+stages:
 - stage: deploy
   jobs:
   - deployment: DeployWeb
@@ -26,7 +17,7 @@ steps:
     pool:
       vmImage: 'Ubuntu-latest'
     # creates an environment if it doesn't exist
-    environment: 'smarthotel-dev'
+    environment: 'DEV'
     strategy:
       runOnce:
         deploy:
