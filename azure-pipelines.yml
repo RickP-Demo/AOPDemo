@@ -22,6 +22,8 @@ stages:
         KeyVaultName: 'aopdemo-dev'
         SecretsFilter: '*'
         RunAsPreJob: true
+    - powershell: |
+        Write-Host "Hoping this works: $(secretSetting)"        
     - task: NuGetToolInstaller@1
     - task: NuGetCommand@2
       inputs:
@@ -50,7 +52,7 @@ stages:
 - stage: DEV
   dependsOn: Build
   variables: 
-    Environment: $(Environment-DEV)
+    Environment: DEV
   jobs:
   - template: deploy-appservice-template.yml
     parameters:
@@ -61,7 +63,7 @@ stages:
 - stage: QA
   dependsOn: DEV
   variables: 
-    Environment: $(Environment-QA)
+    Environment: QA
   jobs:
   - template: deploy-appservice-template.yml
     parameters:
@@ -72,7 +74,7 @@ stages:
 - stage: STAGE
   dependsOn: QA
   variables: 
-    Environment: $(Environment-Stage)
+    Environment: Stage
   jobs:
   - template: deploy-appservice-template.yml
     parameters:
@@ -83,7 +85,7 @@ stages:
 - stage: PROD
   dependsOn: STAGE
   variables: 
-    Environment: $(Environment-PROD)
+    Environment: PROD
   jobs:
   - template: deploy-appservice-template.yml
     parameters:
