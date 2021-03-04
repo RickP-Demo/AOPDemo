@@ -44,7 +44,8 @@ stages:
 - stage: DEV
   dependsOn: Build
   variables: 
-    Environment: DEV
+  - group: aopdemo-dev
+    
   jobs:
   - template: deploy-appservice-template.yml
     parameters:
