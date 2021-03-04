@@ -59,7 +59,7 @@ stages:
 - stage: QA
   dependsOn: DEV
   variables: 
-    Environment: QA
+    Environment: $(Environment-QA)
   jobs:
   - template: deploy-appservice-template.yml
     parameters:
@@ -70,7 +70,7 @@ stages:
 - stage: STAGE
   dependsOn: QA
   variables: 
-    Environment: STAGE
+    Environment: $(Environment-Stage)
   jobs:
   - template: deploy-appservice-template.yml
     parameters:
@@ -81,7 +81,7 @@ stages:
 - stage: PROD
   dependsOn: STAGE
   variables: 
-    Environment: PROD
+    Environment: $(Environment-PROD)
   jobs:
   - template: deploy-appservice-template.yml
     parameters:
