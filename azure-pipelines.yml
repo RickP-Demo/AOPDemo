@@ -17,6 +17,7 @@ variables:
   - name: artifactName
     value: 'drop'
 
+
 stages:
 - stage: Build
   jobs:
@@ -50,7 +51,9 @@ stages:
 - stage: DEV
   dependsOn: Build
   variables: 
-    Environment: ${{ variables.Environment-Dev }}
+    - group: aopdemo
+    - name: Environment
+      value: $[variables.Environment-Dev]
     
   jobs:
   - template: deploy-appservice-template.yml
@@ -62,7 +65,7 @@ stages:
 - stage: QA
   dependsOn: Build
   variables: 
-    Environment: ${{ variables.Environment-QA }}
+    Environment: $(Environment-QA)
   jobs:
   - template: deploy-appservice-template.yml
     parameters:
@@ -73,7 +76,7 @@ stages:
 - stage: STAGE
   dependsOn: QA
   variables: 
-    Environment: ${{ variables.Environment-Stage }}
+    Environment: $(Environment-Stage)
   jobs:
   - template: deploy-appservice-template.yml
     parameters:
@@ -84,7 +87,7 @@ stages:
 - stage: PROD
   dependsOn: STAGE
   variables: 
-    Environment: ${{ variables.Environment-PROD }}
+    Environment: $(Environment-PROD)
   jobs:
   - template: deploy-appservice-template.yml
     parameters:
