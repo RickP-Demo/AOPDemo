@@ -53,7 +53,7 @@ stages:
       subscription: $(subscription)
 
 - stage: QA
-  dependsOn: DEV
+  dependsOn: Build
   variables: 
     Environment: QA
   jobs:
