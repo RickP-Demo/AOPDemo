@@ -5,6 +5,7 @@ trigger:
 pool:
   vmImage: windows-2019
 variables:
+  - group: aopdemo
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
@@ -44,7 +45,7 @@ stages:
 - stage: DEV
   dependsOn: Build
   variables: 
-  - group: aopdemo-dev
+    Environment: DEV
     
   jobs:
   - template: deploy-appservice-template.yml
