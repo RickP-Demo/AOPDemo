@@ -20,6 +20,8 @@ stages:
       inputs:
         azureSubscription: 'AOPDemo'
         KeyVaultName: 'aopdemo-dev'
+        SecretsFilter: '*'
+        RunAsPreJob: true
     - task: NuGetToolInstaller@1
     - task: NuGetCommand@2
       inputs:
