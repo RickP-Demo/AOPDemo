@@ -5,11 +5,17 @@ trigger:
 pool:
   vmImage: windows-2019
 variables:
-  solution: '**/*.sln'
-  buildPlatform: 'Any CPU'
-  buildConfiguration: 'Release'
-  subscription: 'AOPDemo'
-  artifactName: 'drop'
+  - group: aopdemo
+  - name: solution 
+    value: '**/*.sln'
+  - name: buildPlatform 
+    value: 'Any CPU'
+  - name: buildConfiguration
+    value: 'Release'
+  - name: subscription
+    value: 'AOPDemo'
+  - name: artifactName
+    value: 'drop'
 
 stages:
 - stage: Build
@@ -44,7 +50,7 @@ stages:
 - stage: DEV
   dependsOn: Build
   variables: 
-  - group: aopdemo-dev
+    Environment: $(Environment-Dev)
     
   jobs:
   - template: deploy-appservice-template.yml
@@ -56,7 +62,7 @@ stages:
 - stage: QA
   dependsOn: Build
   variables: 
-    Environment: QA
+    Environment: $(Environment-QA)
   jobs:
   - template: deploy-appservice-template.yml
     parameters:
@@ -67,7 +73,7 @@ stages:
 - stage: STAGE
   dependsOn: QA
   variables: 
-    Environment: STAGE
+    Environment: $(Environment-Stage)
   jobs:
   - template: deploy-appservice-template.yml
     parameters:
@@ -78,7 +84,7 @@ stages:
 - stage: PROD
   dependsOn: STAGE
   variables: 
-    Environment: PROD
+    Environment: $(Environment-Prod)
   jobs:
   - template: deploy-appservice-template.yml
     parameters:
