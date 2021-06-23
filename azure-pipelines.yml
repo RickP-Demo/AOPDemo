@@ -53,15 +53,6 @@ stages:
       environment: ${{ variables.environment }} 
       webAppName: dape-azure-app-service-dev
       subscription: $(subscription)
-  - job: CallIPify
-    steps:
-    - task: InvokeRESTAPI@1
-      inputs:
-        connectionType: 'connectedServiceName'
-        serviceConnection: 'IPify'
-        method: 'GET'
-        headers: 
-        waitForCompletion: 'false'
 
 - stage: QA
   dependsOn: DEV
