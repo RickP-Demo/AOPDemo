@@ -3,7 +3,7 @@
 trigger:
 - main
 pool:
-  vmImage: windows-2019
+  name: dapesurfacepool
 variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
