@@ -9,6 +9,11 @@ using AOPDemo.Models;
 
 namespace AOPDemo.Controllers
 {
+    public class CustomerObject
+    {
+        public string Name { get; set; }
+        public string SSN { get; set; }
+    }
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -23,8 +28,25 @@ namespace AOPDemo.Controllers
             return View();
         }
 
+
+        private CustomerObject GetCustomerObject(){
+            return new CustomerObject{
+                Name = "Pookie Williams"
+                , SSN = "100-20-3000"
+            };
+        }
+
         public IActionResult Privacy()
         {
+            var customerObject = GetCustomerObject();
+            try
+            {
+                var intvalue = int.Parse(customerObject.SSN);
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
             return View();
         }
 
